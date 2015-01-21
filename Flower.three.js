@@ -14,6 +14,7 @@ var objectArray = [];
 var stemArray = [];
 var petalArray = [];
 var flowerArray = [];
+//flowerArray needs to be an array within an array, this accomplishes that
 for (var a = 0; a <= 2; a++) {
     flowerArray[a] = [];
   }
@@ -57,6 +58,7 @@ function render() {
 	
 	renderer.render(scene, camera); 
 }
+//Geometry for the base the stem stands in (trapezoid)
 function normalbase(i) { 
 	geometry = new THREE.CylinderGeometry(.75,1.5,1,4,false);
 	geometry.colorsNeedUpdate = true;
@@ -76,6 +78,7 @@ function normalbase(i) {
 	objectArray[i].geometry.verticesNeedUpdate = true;
 	objectArray[i].geometry.normalsNeedUpdate = true;
 }
+//Geometry for base the stem stands in (half-sphere)
 function sentrybase(i) { 
 	geometry = new THREE.SphereGeometry(1.5, 32, 16, Math.PI, Math.PI, 3*Math.PI/2);
 	geometry.colorsNeedUpdate = true;
@@ -95,6 +98,7 @@ function sentrybase(i) {
 	objectArray[i].geometry.verticesNeedUpdate = true;
 	objectArray[i].geometry.normalsNeedUpdate = true;	
 }
+//Combine the 3 parts of the flower (Petals, Stamen, Stem) into One object for animation and coloring purposes.
 function flower(o,x,y) { 
 	geometry = new THREE.CylinderGeometry(.05,.05,3.5,16,false);
 	geometry.colorsNeedUpdate = true;
@@ -116,7 +120,9 @@ function flower(o,x,y) {
 	flowerArray[0].push(stemArray[o]);
 	petal(p++,32,x,y+2);
 	sphere(.5,i++,x,y+2);
-}			
+}
+//Draw a single petal, the value n when calling this function determines the 
+//Number of petals, and should automatically space them evenly
 function petal(o,n,x,y) { 
 	for ( p = 0; p < n ; p++ ){
 	geometry = new THREE.Geometry();
@@ -158,7 +164,7 @@ function petal(o,n,x,y) {
 	petalArray[p] = new THREE.Mesh(geometry,material);
 	petalArray[p].scale.set(.3,.3,.3);
 	petalArray[p].rotation.z = 80 * Math.PI/180;
-  petalArray[p].rotation.z = (360/n)*p * Math.PI/180;
+  	petalArray[p].rotation.z = (360/n)*p * Math.PI/180;
 	petalArray[p].position.y = y;
 	petalArray[p].position.x = x;
 	scene.add(petalArray[p]);
@@ -167,7 +173,8 @@ function petal(o,n,x,y) {
 	petalArray[p].geometry.normalsNeedUpdate = true;
 	flowerArray[1].push(petalArray[p]);
 	}
-}		
+}
+//Draw the stamen. The value n determines the radius of the sphere created
 function sphere(n,i,x,y) { //Spheres
 	geometry = new THREE.SphereGeometry(n,32,32);
 	geometry.colorsNeedUpdate = true;
