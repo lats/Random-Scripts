@@ -1,2 +1,2 @@
-# WebGL
-A random collection of WebGL stuffs. Nothing special, just things.
+# Stuff
+A random collection of stuffs. Nothing special, just things.
